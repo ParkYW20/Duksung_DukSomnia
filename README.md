@@ -1,2 +1,2 @@
-# Duksung_5_Duk-Sae
-무사 졸업 기원 오덕새 프로젝트
+# Duksung_DukSomnia
+무사 졸업 기원 포 덕새 프로젝트
