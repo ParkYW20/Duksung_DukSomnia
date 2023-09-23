@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'STT Yeonwoo from Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(
+          title: 'try to build \'STT\' - Flutter Demo Home Page'),
     );
   }
 }
@@ -108,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+            const Text('마이크 ON\n -> 오디오(음성) 데이터로부터 사용자 키워드 인식이 시작됩니다.'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -116,6 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        // 이 부분을 음성 인식 시작 버튼으로 (마이크 on/off) 으로 만들 예정임
+        // startRecording:
+        // tooltip:
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
