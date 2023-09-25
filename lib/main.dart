@@ -106,19 +106,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            const Text('마이크 ON\n -> 오디오(음성) 데이터로부터 사용자 키워드 인식이 시작됩니다.'),
+            const Text('마이크 ON 버튼을 누르면\n 오디오(음성) 데이터로부터 사용자 키워드 인식이 시작됩니다.'),
             ElevatedButton.icon(
               // 버튼 추가함, 정상 작동 확인 필요
               // onPressd: () {}, // {} 내부에 응답 내용 작성
               onPressed: _incrementCounter, // 음성 및 키워드 인식 함수로 치환해야 함
-              icon: Icon(Icons.add, size: 15), // .icon 문법에서는 이 요소가 필요하여 추가함
+              icon: Icon(Icons.add,
+                  size: 15), // ElevatedButton.icon 문법에서는 이 요소가 필요하여 추가함
               label: Text("마이크 on 버튼 후보"),
               // tooltip: 'Record Starting button (maybe...)'
             ),
-            SizeBox(height: 15), // 공간 만들어주기 위해 추가함
+            // SizeBox(height: 15), // 공간 만들어주기 위해 추가함
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,

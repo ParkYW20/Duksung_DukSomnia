@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # speech_recognition: ^3.0.0  # STT 위해 추가함
+  speech_to_text: ^6.3.0
 
 
   # The following adds the Cupertino Icons font to your application.
