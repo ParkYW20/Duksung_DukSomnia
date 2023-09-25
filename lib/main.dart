@@ -111,12 +111,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const Text('마이크 ON\n -> 오디오(음성) 데이터로부터 사용자 키워드 인식이 시작됩니다.'),
             ElevatedButton.icon(
-                // 버튼 추가함, 정상 작동 확인 필요
-                // onPressd: () {}, // {} 내부에 응답 내용 작성
-                onPressd: 음성 및 키워드 인식 함수,
-                icon: Icon(Icons.add, size: 15),  // .icon 문법에서는 이 요소가 필요하여 추가함
-                label: Text("마이크 on 버튼 후보"),
-                // tooltip: 'Record Starting button (maybe...)'
+              // 버튼 추가함, 정상 작동 확인 필요
+              // onPressd: () {}, // {} 내부에 응답 내용 작성
+              onPressed: _incrementCounter, // 음성 및 키워드 인식 함수로 치환해야 함
+              icon: Icon(Icons.add, size: 15), // .icon 문법에서는 이 요소가 필요하여 추가함
+              label: Text("마이크 on 버튼 후보"),
+              // tooltip: 'Record Starting button (maybe...)'
             ),
             SizeBox(height: 15), // 공간 만들어주기 위해 추가함
             Text(
