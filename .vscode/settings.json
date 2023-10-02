@@ -1,0 +1,4 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cmake.sourceDirectory": "C:/Users/ParkYeonwoo/flutter_projects/stt_test01/windows"
+}
