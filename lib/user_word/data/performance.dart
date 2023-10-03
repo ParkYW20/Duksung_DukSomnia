@@ -8,15 +8,13 @@ class Performance {
 
   Performance(this.id, this.date, this.word);
 
-  // named constructor : map에서 Performance 객체를 생성
-  Performance.fromJson(Map<String, dynamic> performanceMap) {
+  Performance.fromJson(Map<String, dynamic> performanceMap) {  // named constructor : map에서 Performance 객체를 생성
     id = performanceMap['id'] ?? 0;
     date = performanceMap['date'] ?? '';
     word = performanceMap['word'] ?? '';
   }
 
-  // Performance 객체를 Map으로 변환
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {   // Performance 객체를 Map으로 변환
     return {'id': id, 'date': date, 'word': word};
   }
 }
