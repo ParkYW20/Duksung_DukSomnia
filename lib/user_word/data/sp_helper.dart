@@ -42,4 +42,8 @@ class SPHelper {  // 프로젝트 코드와 shared_preferences 간의 인터페�
   int getCounter() {    // 읽기 처리가 필요하므로 동기식으로 설정
     return prefs.getInt('counter') ?? 0;
   }
+
+  Future deletePerformance(int id) async {  // 단어 데이터 삭제 메소드
+    prefs.remove(id.toString());
+  }
 }

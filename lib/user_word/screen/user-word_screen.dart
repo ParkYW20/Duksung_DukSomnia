@@ -102,9 +102,17 @@ class _UserWordScreenState extends State<UserWordScreen> {
   List<Widget> getContent() {   // ListTile 위젯을 만들어 반환하는 메소드
     List<Widget> tiles = [];
     performances.forEach((performance) {  // performance(단어 입력)에 대해 각각 listTile 만들어 tiles에 추가함
-      tiles.add(ListTile(
-        title: Text(performance.word),
-        subtitle: Text('입력 시간: ${performance.date}'),
+      tiles.add(
+        Dismissible(   // 삭제를 위해 Dismissible 위젯 추가
+          key: UniqueKey(),   // 위젯을 고유하게 식별 가능하도록 함
+          onDismissed: (_) {  // 스크롤 방향을 받는 매개변수 입력 가능하지만 사용하지 않은 상태
+            helper.deletePerformance(performance.id)
+            .then((value) => updateScreen()); // 화면 갱신
+          },
+          child: ListTile(
+            title: Text(performance.word),
+            subtitle: Text('입력 시간: ${performance.date}'),
+          )
       ));
     });
     return tiles;
