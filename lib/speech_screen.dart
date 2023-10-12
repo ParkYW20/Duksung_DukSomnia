@@ -1,6 +1,7 @@
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:stt_test01/user_word/screen/user-word_screen.dart';
 // import 'package:stt_test01/colors.dart';   // bgColor 등을 colors.dart 등에 따로 지정해둘 경우에 본 코드 필요함
 
 class SpeechScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class SpeechScreen extends StatefulWidget {
 }
 
 class _SpeechScreenState extends State<SpeechScreen> {
-  SpeechToText speechToText = SpeechToText(); // flutter에서 제공하는 STT 객체를 사용
+  SpeechToText speechToText = SpeechToText(); // flutter에서 제공하는 STT 플러그인 및 객체를 사용
   var text = "버튼을 누르고 음성 인식을 시작하세요.";
   var isListening = false;
 
@@ -49,7 +50,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 }
               }
             },
-            onTapUp: (details) {    // 버튼을 다시 누르면 녹음 및 음성 인식이 중지됨
+            onTapUp: (details) {    // 버튼에서 손을 떼면 녹음 및 음성 인식이 중지됨
               setState(() {
                 isListening = false;
               });
@@ -70,30 +71,50 @@ class _SpeechScreenState extends State<SpeechScreen> {
               Colors.purple, // 'bgColor' or 'const Color.fromARGB()'
           elevation: 0.0,
           title: const Text(
-            "Speech to Text 기능을 테스트합니다.",
+            "Speech to Text 기능 테스트",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: Colors.white, // textColor,
             ),
           ),
         ),
-        body: SingleChildScrollView(    // 화면 바디 - 음성 인식된 문장을 스크롤하며 확인할 수 있음
-          reverse: true,
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.7,   // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
-            alignment: Alignment.center, // text 등 요소를 가운데 정렬
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            margin: const EdgeInsets.only(bottom: 150),
-            child: Text(
-              text,
-              style: TextStyle(
-                  fontSize: 24,
-                  color: isListening ? Colors.black87 : Colors.black54,
-                  fontWeight: FontWeight.w600),
-            ),
+        body: 
+          SingleChildScrollView(    // 화면 바디 - 음성 인식된 문장을 스크롤하며 확인할 수 있음
+            reverse: true,
+            physics: const BouncingScrollPhysics(),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.7,   // 이상: 스크롤view 요소를 추가하면서 함께 추가한 코드
+              alignment: Alignment.center, // text 등 요소를 가운데 정렬
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              margin: const EdgeInsets.only(bottom: 150),
+              child: 
+                Text(
+                  text,
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: isListening ? Colors.black87 : Colors.black54,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              
+
+              //   Container(
+              //   child: [
+              //     SizedBox(
+              //       height: 100,
+              //     ),
+              //     Text("사용자 지정 단어 리스트 화면으로 넘어갑니다."),
+              //     ElevatedButton(   // 화면 전환할 버튼 임시로 추가 : 사용자 정의 단어 사전으로 전환
+              //       onPressed: () => Navigator.push(context, 
+              //         MaterialPageRoute(builder: (_) => UserWordScreen())),
+              //       child: Text("사용자 지정 단어 리스트"),
+              //     ),
+              //   ],)
+              // ),
+              //   )
+              
           ),
-        ));
+    );
   }
 }
