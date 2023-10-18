@@ -21,8 +21,7 @@ class SPHelper {  // 프로젝트 코드와 shared_preferences 간의 인터페�
 
   List<Performance> getPerformances() {   // Shared Preferences 데이터를 읽는 메소드: performance 리스트를 반환
     List<Performance> performances = [];
-    Set<String> keys =
-        prefs.getKeys(); // SharedPreferences에 저장한 모든 키를 getKeys 메소드를 사용해 가져옴
+    Set<String> keys = prefs.getKeys(); // SharedPreferences에 저장한 모든 키를 getKeys 메소드를 사용해 가져옴
     keys.forEach((String key) {  // performance를 가져올 때 모든 키를 취득 후 performance를 생성하여 가져오고 있음 
       if (key != 'counter') {    // 키가 'counter'일 때는 객체 생성을 제외시킴
         Performance performance = Performance.fromJson(json.decode(
@@ -46,4 +45,16 @@ class SPHelper {  // 프로젝트 코드와 shared_preferences 간의 인터페�
   Future deletePerformance(int id) async {  // 단어 데이터 삭제 메소드
     prefs.remove(id.toString());
   }
+
+  List<String> getPrefs() {   // Shared Preferences 데이터가 담긴 String 객체 리스트를 반환
+    List<String> preferences = [];
+    List<Performance> performanceList = getPerformances();
+    performanceList.forEach((Performance e) {
+      preferences.add(e.word);
+    });
+    return preferences;
+  }
+
 }
+
+
