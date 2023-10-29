@@ -35,9 +35,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  avatar_glow: ^2.0.2
+  # 이하: STT 및 사용자 지정 단어 구현을 위해 추가
+  avatar_glow: ^2.0.2   
   speech_to_text: ^6.3.0
   shared_preferences: ^2.2.1
+  # 이하: notification 구현 위해 추가
+  flutter_local_notifications: ^9.6.1
+  timezone: ^0.8.0 
+  rxdart: ^0.27.4
 
 dev_dependencies:
   flutter_test:

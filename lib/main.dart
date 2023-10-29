@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stt_test01/services/local_notification_service.dart';
 import 'package:stt_test01/speech_screen.dart';
 import 'package:stt_test01/user_word/screen/user-word_screen.dart';
 
@@ -33,8 +34,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const MyHomePage(title: 'Yeonwoo Flutter Demo Home Page'),
-      home: const SpeechScreen(),
+      home: const MyHomePage(title: 'Yeonwoo Flutter Demo Home Page'),
+      // home: const SpeechScreen(),
       // home: const UserWordScreen(),
     );
   }
@@ -59,71 +60,60 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  late final LocalNotificationService service; // Notification test 위해 추가
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
+          // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             const Text(
-              'You have pushed the button this many times:',
+              '음성 인식 화면으로 넘어갑니다.', 
+              style: TextStyle(fontSize: 20),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            ElevatedButton(
+              // 화면 전환할 버튼 임시로 추가 : 음성 인식 화면으로 전환
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => SpeechScreen())),
+              child: const Text("STT 페이지"),
             ),
-          ],
+            const Text(
+              '사용자 지정 단어 화면으로 넘어갑니다.', 
+              style: TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              // 화면 전환할 버튼 임시로 추가 : 사용자 단어 저장 화면으로 전환
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => UserWordScreen())),
+              child: const Text("사용자 지정 단어 사전"),
+            ),
+            const Text(
+              '알림을 띄웁니다.', 
+              style: TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await service.showNotification(id: 0, title: '사용자 단어 인식', body: '지정 단어가 인식되었습니다.');
+              }, 
+              child: const Text('알림 버튼'),
+            ),
+          ]
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }

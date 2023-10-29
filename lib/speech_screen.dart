@@ -1,6 +1,7 @@
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:stt_test01/services/local_notification_service.dart';
 import 'package:stt_test01/user_word/data/performance.dart';
 import 'package:stt_test01/user_word/data/sp_helper.dart';
 import 'package:stt_test01/user_word/screen/user-word_screen.dart';
@@ -20,6 +21,15 @@ class _SpeechScreenState extends State<SpeechScreen> {
   var isListening = false;
   final SPHelper helper = SPHelper(); // 단어 비교 시 필요
   List<String> wordList = []; // 단어 비교 코드에서 사용자 단어 객체 (String) 리스트를 가져와 저장함
+
+  late final LocalNotificationService service; // Notification test 위해 추가
+
+  @override
+  void initState() {    // 알림 기능 연동 위해 추가
+    service = LocalNotificationService();
+    service.initialize();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +52,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
             if (!isListening) {
               var available = await speechToText.initialize();
+              service.initialize();
               if (available) {
                 setState(() {
                   isListening = true;
@@ -52,10 +63,11 @@ class _SpeechScreenState extends State<SpeechScreen> {
                       // 실물 디바이스에서 테스트 해본 후, DB 혹은 아래 리스트 생성 코드 필요한지 확인하기 
                       // List<String> s = [];
                       // s.add(text);
-                      wordList.forEach((element) {
+                      wordList.forEach((element) async {
                         if (text == element) {
                           print("지정 단어가 인식되었습니다.");
-                          // 알림 메소드 호출 -> 알림 띄우기
+                          // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
+                          await service.showNotification(id: 0, title: '사용자 단어 인식', body: '지정 단어 " $text "가 인식되었습니다.');
                         }
                       });
                     });
