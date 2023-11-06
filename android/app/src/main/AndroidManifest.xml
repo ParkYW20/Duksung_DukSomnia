@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>   <!--STT 기능, 네이버 CSR-->
+    <uses-permission android:name="android.permission.INTERNET"/>   <!--STT 기능, 네이버 CSR-->
+    <uses-permission android:name="android.permission.VIBRATE"/>    <!--진동 기능-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!--네이버 CSR-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />    <!--네이버 CSR-->
 
     <application
         android:label="stt_test01"

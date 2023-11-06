@@ -1,4 +1,5 @@
-// 20200207 박연우
+// 20200207 박연우, 아미공 2023 졸프 덕썸니아
+// 사용자 단어 사전 구현
 
 import 'package:flutter/material.dart';
 import 'package:stt_test01/user_word/data/performance.dart';

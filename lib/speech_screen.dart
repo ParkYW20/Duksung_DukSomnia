@@ -1,10 +1,15 @@
+// 20200207 박연우, 아미공 2023 졸프 덕썸니아
+// STT 및 사용자 단어 인식 구현
+
+import 'dart:developer';
+
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:stt_test01/services/local_notification_service.dart';
-import 'package:stt_test01/user_word/data/performance.dart';
+import 'package:stt_test01/services/local_notification_service.dart'; // 알림(메시지) 기능, pub.dev
 import 'package:stt_test01/user_word/data/sp_helper.dart';
 import 'package:stt_test01/user_word/screen/user-word_screen.dart';
+import 'package:vibration/vibration.dart'; // 알림(진동) 기능, pub.dev
 // import 'package:stt_test01/colors.dart';   // bgColor 등을 colors.dart 등에 따로 지정해둘 경우에 본 코드 필요함
 
 class SpeechScreen extends StatefulWidget {
@@ -25,7 +30,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
   late final LocalNotificationService service; // Notification test 위해 추가
 
   @override
-  void initState() {    // 알림 기능 연동 위해 추가
+  void initState() {
+    // 알림 기능 연동 위해 추가
     service = LocalNotificationService();
     service.initialize();
     super.initState();
@@ -49,6 +55,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
             // 버튼을 누르면 오디오 녹음 및 음성 인식이 시작됨
             wordList = helper.getPrefs();
             print("${wordList.toString()}"); // getPrefs() 정상 작동 확인용 코드
+            log("${wordList}");
 
             if (!isListening) {
               var available = await speechToText.initialize();
@@ -60,14 +67,24 @@ class _SpeechScreenState extends State<SpeechScreen> {
                     setState(() {
                       text = result.recognizedWords;
                       // 이 부분 수정 필요: text를 단어 별로 분리하여 저장 후 단어와 wordList의 원소 값을 비교해야 함
-                      // 실물 디바이스에서 테스트 해본 후, DB 혹은 아래 리스트 생성 코드 필요한지 확인하기 
-                      // List<String> s = [];
-                      // s.add(text);
+                      // 실시간 변환이 빠른 속도로 이루어져야 한다는 점이 중요함 
+                      // 네이버 NEST 엔진 및 CSR SDK : 음성 '명령' 인식 
+                      // (1) 클라이언트에서 서버로 음성 녹음 파일을 보낸다 -> 서버의 STT로부터 결과를 받아와 화면 출력
+                      // (2) [서버 구축] 클라이언트에서 서버로 음성 녹음 파일을 보낸다
+                      //     -> 서버 STT -> 어절을 단어 단위로 분리 -> DB 사용자 단어와 비교
+                      //     -> 일치할 시 클라이언트에 알림 -> 클라이언트에서 알림 및 진동 메소드 호출
+                      //     (observer 패턴 사용: 사용자 단어가 인식된 경우에, 알림 및 진동 observer에서 각각 O.update() 호출, update()를 알림 및 진동으로 설정)
+                      /* 사용자가 입력한 단어를 이진 탐색 가능하도록 저장하여 DB에 단어 입력될 시 log n 의 시간복잡도로 반응하도록 하는 것은 어떨까? 
+                      */
                       wordList.forEach((element) async {
                         if (text == element) {
-                          print("지정 단어가 인식되었습니다.");
+                          log("지정 단어가 인식되었습니다.");
                           // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
-                          await service.showNotification(id: 0, title: '사용자 단어 인식', body: '지정 단어 " $text "가 인식되었습니다.');
+                          await service.showNotification(
+                              id: 0,
+                              title: '사용자 단어 인식',
+                              body: '지정 단어 " $text "가 인식되었습니다.');
+                          await Vibration.vibrate(duration: 1000);
                         }
                       });
                     });
@@ -139,7 +156,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                   // 화면 전환할 버튼 임시로 추가 : 사용자 정의 단어 사전으로 전환
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => UserWordScreen())),
-                  child: Text("사용자 지정 단어 리스트"),
+                  child: const Text("사용자 지정 단어 리스트"),
                 ),
               ],
             ),

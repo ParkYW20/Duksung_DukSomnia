@@ -1,4 +1,4 @@
-// 20200207 박연우
+// 20200207 박연우, 아미공 2023 졸프 덕썸니아
 // Shared Preferences 헬퍼 클래스 : 데이터를 저장하는 패키지인 Shared Preferences를 처리하는 클래스
 
 import 'package:shared_preferences/shared_preferences.dart';

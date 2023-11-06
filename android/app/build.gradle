@@ -65,3 +65,17 @@ flutter {
 }
 
 dependencies {}
+// 코틀린 -> 자바 바꾸는 과정에서 추가함
+// dependencies {       
+//     testImplementation 'junit:junit:4.12'
+//     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+// }
+
+// 이하: 네이버 CSR (모바일 SDK) 사용하기 위해 추가함
+// repositories {
+//     jcenter()
+// }
+// dependencies {
+//     compile 'com.naver.speech.clientapi:naverspeech-ncp-sdk-android:1.1.6'
+// }

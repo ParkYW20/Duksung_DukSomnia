@@ -1,8 +1,11 @@
+// 20200207 박연우, 아미공 2023 졸프 덕썸니아
+// 알림 메시지 구현 코드
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:rxdart/subjects.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
+// import 'package:rxdart/subjects.dart';
+// import 'package:timezone/timezone.dart' as tz;
+// import 'package:timezone/data/latest.dart' as tz;
 
 class LocalNotificationService {
   LocalNotificationService();
@@ -32,11 +35,13 @@ class LocalNotificationService {
 
   Future<NotificationDetails> _notificationDetails() async {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel_Id', 'channel_Name',
-            channelDescription: 'description',
-            importance: Importance.max,
-            priority: Priority.max,
-            playSound: true);
+        AndroidNotificationDetails(
+          'channel_Id', 
+          'channel_Name',
+          channelDescription: 'description',
+          importance: Importance.max,
+          priority: Priority.max,
+          playSound: true);
     const IOSNotificationDetails iosNotificationDetails =
         IOSNotificationDetails();
     return NotificationDetails(
