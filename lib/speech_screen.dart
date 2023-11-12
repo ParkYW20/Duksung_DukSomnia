@@ -3,9 +3,9 @@
 
 import 'dart:developer';
 
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:avatar_glow/avatar_glow.dart';
-import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_to_text.dart';  // 음성 인식 결과 반환
+import 'package:avatar_glow/avatar_glow.dart';  // 음성 인식 텍스트를 출력할 때 시각적 효과를 제공
+import 'package:flutter/material.dart'; 
 import 'package:stt_test01/services/local_notification_service.dart'; // 알림(메시지) 기능, pub.dev
 import 'package:stt_test01/user_word/data/sp_helper.dart';
 import 'package:stt_test01/user_word/screen/user-word_screen.dart';
@@ -76,17 +76,23 @@ class _SpeechScreenState extends State<SpeechScreen> {
                       //     (observer 패턴 사용: 사용자 단어가 인식된 경우에, 알림 및 진동 observer에서 각각 O.update() 호출, update()를 알림 및 진동으로 설정)
                       /* 사용자가 입력한 단어를 이진 탐색 가능하도록 저장하여 DB에 단어 입력될 시 log n 의 시간복잡도로 반응하도록 하는 것은 어떨까? 
                       */
-                      wordList.forEach((element) async {
-                        if (text == element) {
-                          log("지정 단어가 인식되었습니다.");
-                          // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
-                          await service.showNotification(
-                              id: 0,
-                              title: '사용자 단어 인식',
-                              body: '지정 단어 " $text "가 인식되었습니다.');
-                          await Vibration.vibrate(duration: 1000);
-                        }
-                      });
+                      if (wordList.isNotEmpty) {    // prefs 비어있으면 에러가 나므로 조건문 만듦
+                        setState(() {
+                          log("wordList.isNotEmpty 작동 확인용 코드");
+                          
+                          wordList.forEach((element) async {
+                            if (text == element) {
+                              log("지정 단어가 인식되었습니다.");
+                              // 알림 메소드 호출 -> 알림 띄우기 (Observer 패턴 혹은 단순 메소드 호출)
+                              await service.showNotification(   // dart는 비동기 처리를 지원하므로 FCM 등 서버 이용 서비스를 사용하지 않고도 앱 자체에서 이벤트를 기다렸다가 알림을 띄울 수 있다. (다중 스레드로 동작)
+                                  id: 0,
+                                  title: '사용자 단어 인식',
+                                  body: '지정 단어 " $text "가 인식되었습니다.');
+                              await Vibration.vibrate(duration: 1000);
+                            }
+                          });
+                        });
+                      }
                     });
                   });
                 });

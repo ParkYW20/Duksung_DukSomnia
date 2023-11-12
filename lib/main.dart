@@ -2,7 +2,7 @@
 // 기능 작동 확인 위한 임시 메인 파일
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';   // 네이버 CSR 이용 및 플랫폼 선언(MethodChannel() 이용)
+// import 'package:flutter/services.dart';   // 네이버 CSR 이용 및 플랫폼 선언(MethodChannel() 이용)
 import 'package:stt_test01/services/local_notification_service.dart'; // 알림(메시지) 기능, 프로젝트 내 directory
 import 'package:stt_test01/speech_screen.dart'; // STT 구현한 screen
 import 'package:stt_test01/user_word/screen/user-word_screen.dart'; // 사용자 단어 사전 구현한 screen
@@ -65,7 +65,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const platform = MethodChannel('com.example.stt_test01/Android');  // 네이버 CSR SDK 이용 위해 client 플랫폼 선언(인자로 들어가는 이름의 채널이 열린다)
+  // static const platform = MethodChannel('com.example.stt_test01/Android');  // 네이버 CSR SDK 이용 위해 client 플랫폼 선언(인자로 들어가는 이름의 채널이 열린다)
   late final LocalNotificationService service; // Notification test 위해 추가
 
   @override

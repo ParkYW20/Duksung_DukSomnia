@@ -12,6 +12,11 @@ class SPHelper {  // 프로젝트 코드와 shared_preferences 간의 인터페�
     prefs = await SharedPreferences.getInstance();
   }
 
+  // // 다른 메서드를 사용하기 전에 initSharedPreferences 호출
+  // SPHelper() {
+  //   initSharedPreferences();
+  // }
+
   Future writePerformance(Performance performance) async {
     prefs.setString(
         performance.id.toString(),
@@ -54,7 +59,7 @@ class SPHelper {  // 프로젝트 코드와 shared_preferences 간의 인터페�
     });
     return preferences;
   }
-
+  
 }
 
 
